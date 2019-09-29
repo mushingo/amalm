@@ -17,7 +17,9 @@ end
 def outputRejectedMangaList(hash)
 	r = ""
 	hash.each{|number, name|
-		r += name + " (" + number.to_s + ") - "
+		puts number
+		puts name
+		r += name.to_s + " (" + (number.to_s) + ") - \n"
 	}
 	return r
 end
@@ -152,7 +154,7 @@ def isPending(page)
 	popularity = page.css('span.numbers:nth-child(2) > strong:nth-child(1)').text.strip
 	members = page.css('span.numbers:nth-child(3) > strong:nth-child(1)').text.strip
 
-	if ranked == "#0" || popularity == "#0" || members == "0"
+	if ranked == "#0" || popularity == "#0" 
 		return true
 	else
 		return false
@@ -184,10 +186,9 @@ total = pending.length
 upto = 1
 pending.each { |number, name|
 	upto += 1
-
 	response = getWebsiteResponse(number)
 
-	if upto % 50 == 0
+	if upto % 20 == 0
 		print "checked " + upto.to_s + " of " + total.to_s + " (" +
 			((upto.to_f/total.to_f)*100.0).round(2).to_s + "%)\n"
 	end
@@ -213,7 +214,7 @@ old_highest = getHighestNumber(approved, pending, rejected)
 
 puts "checking newly added"
 manga_number = old_highest + 1
-while unknowns_in_a_row < 200 do
+while unknowns_in_a_row < 30 do
 	response = getWebsiteResponse(manga_number)
 
 	if response == nil
